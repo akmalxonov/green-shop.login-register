@@ -1,10 +1,12 @@
-import MainComponent from "../../components/main-component";
+import MainLayout from "../../components/mainLayout";
+import Modals from "../../components/modals";
 
 const Home = () => {
     return (
-        <div>
-            <MainComponent/>
-        </div>
+        <>
+            <MainLayout/>
+            <Modals/>
+        </>
     );
 }
 

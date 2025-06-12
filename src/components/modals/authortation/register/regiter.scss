@@ -1,0 +1,26 @@
+.register {
+  p {
+    font-size: 13px;
+    margin: 40px 0 15px 0;
+    font-weight: 400;
+  }
+  a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-green);
+    text-align: end;
+  }
+  .btn {
+    width: 100%;
+    padding: 16px 0;
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+  }
+}
