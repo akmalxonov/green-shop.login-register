@@ -1,0 +1,15 @@
+.all {
+  margin: 40px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  .card {
+    height: auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .ant-card-actions {
+      margin-top: auto;
+    }
+  }
+}

@@ -6,7 +6,9 @@ import logout from "../../assets/Logout.svg";
 import "../navbar/navbar.scss";
 import { setOpenAuthorizationModal } from "../../redux/modal-slice";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
     const [name, setName] = useState("Login");
 
@@ -26,10 +28,10 @@ const Navbar = () => {
             <img src={logo} alt="" />
           </div>
           <div className="list">
-            <a href="#">Home</a>
+            <a href="#" onClick={()=>navigate("/")}>Home</a>
             <a href="#">Shop</a>
             <a href="#">Plant Care</a>
-            <a href="#">Blogs</a>
+            <a href="#" onClick={()=>navigate("/blog")}>Blogs</a>
           </div>
           <div className="left">
             <div className="search">

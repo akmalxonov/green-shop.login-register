@@ -10,6 +10,31 @@
     color: var(--color-green);
     text-align: end;
   }
+  h6{
+    font-size: 13px;
+    margin: 46px 0 27px 0;
+    font-weight: 400;
+    text-align: center;
+  }
+  .btn-google{
+    width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 13px 0;
+    border: 1px solid #EAEAEA;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+    
+    .icon{
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+  }
   .btn {
     width: 100%;
         padding: 16px 0;
@@ -23,4 +48,5 @@
       animation: spin 1s linear infinite;
     }
   }
+
 }
