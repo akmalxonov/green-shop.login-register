@@ -1,8 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit"
 import modalSlice from "../modal-slice"
+import cardSlice  from "../shopSlice"
 export const store = configureStore({
     reducer:{
-        modalSlice
+        modalSlice,
+        cardSlice   
     }
 })
 

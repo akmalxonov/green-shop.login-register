@@ -101,18 +101,19 @@ export interface ProductsType {
   _id: string;
   title: string;
   price: number;
-  discount: false;
-  discount_price: "0";
+  discount: boolean;
+  discount_price: string;
   short_description: string;
   description: string;
   main_image: string;
-  detailed_images: [];
+  detailed_images: string[];
   rate: number;
   views: number;
   tags: [];
-  comments: [];
+  comments: string[];
   created_by: string;
   created_at: string;
   __v: number;
   sold_times: number;
 }
+

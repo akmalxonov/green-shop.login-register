@@ -1,4 +1,4 @@
-import { Card, Flex } from "antd";
+import { Card } from "antd";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaRegCommentDots } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";

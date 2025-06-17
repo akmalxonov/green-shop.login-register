@@ -4,7 +4,6 @@ import { useRegisterMutation, useRegisterWithGoogleMutation } from "../../../../
 import { Loader } from "lucide-react";
 import "../register/regiter.scss"
 import { notificationApi } from "../../../../generic/notificationApi";
-import { signInWithGoogle } from "../../../../config";
 import { FcGoogle } from "react-icons/fc";
 const Register = () => {
     const {mutate,isPending} = useRegisterMutation()

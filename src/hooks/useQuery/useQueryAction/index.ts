@@ -71,6 +71,7 @@ export const useRegisterWithGoogleMutation = () => {
     mutationKey: ["register-google"],
     mutationFn: async () => {
       const response = await signInWithGoogle();
+      console.log(response)
       return axios({
         url: "api/user/sign-up/google",
         method: "POST",

@@ -16,6 +16,7 @@ const modalSlice = createSlice({
             state.openAuthorizationModal  = !state.openAuthorizationModal;
         }
     }
+    
 })
 
 export const {setOpenAuthorizationModal} = modalSlice.actions;

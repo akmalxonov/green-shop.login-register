@@ -7,7 +7,16 @@ const useLoader = () => {
     ));
   };
 
-  return { categories_loader };
+  const products_loader = () => {
+    return Array.from({ length: 9 }).map((_, idx) => (
+      <div key={idx}>
+        <Skeleton.Image   active   />
+        <Skeleton.Input  active  />
+      </div>
+    ));
+  };
+
+  return { categories_loader,products_loader };
 };
 
 export default useLoader;
