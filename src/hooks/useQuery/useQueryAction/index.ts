@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setOpenAuthorizationModal } from "../../../redux/modal-slice";
 import { notificationApi } from "../../../generic/notificationApi";
 import { signInWithGoogle } from "../../../config";
+import { getCoupon } from "../../../redux/shopSlice";
 
 export const useLoginMutation = () => {
   const axios = useAxios();
@@ -71,7 +72,7 @@ export const useRegisterWithGoogleMutation = () => {
     mutationKey: ["register-google"],
     mutationFn: async () => {
       const response = await signInWithGoogle();
-      console.log(response)
+      console.log(response);
       return axios({
         url: "api/user/sign-up/google",
         method: "POST",
@@ -104,11 +105,11 @@ export const useLoginWithGoogleMutation = () => {
   return useMutation({
     mutationKey: ["login-google"],
     mutationFn: async () => {
-      const response = await signInWithGoogle()
+      const response = await signInWithGoogle();
       return axios({
         url: "api/user/sign-in/google",
         method: "POST",
-        body:{ email: response.user.email } ,
+        body: { email: response.user.email },
       });
     },
     onSuccess: (res: {
@@ -125,6 +126,20 @@ export const useLoginWithGoogleMutation = () => {
     },
     onError: () => {
       notify("login_wrong");
+    },
+  });
+};
+
+export const useGetCoupon = () => {
+  const axios = useAxios();
+  const dispatch = useDispatch();
+  return useMutation({
+    mutationKey: ["coupon"],
+    mutationFn: (coupon_code: string) =>
+      axios({ url: "api/features/coupon", params: { coupon_code } }),
+    onSuccess(data) {
+      console.log(data.data.discount_for);
+      dispatch(getCoupon(data.data.discount_for));
     },
   });
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel,Radio } from "antd";
+import { Carousel } from "antd";
 import '../swiper/swiper.scss';
 const contentStyle: React.CSSProperties = {
   height: "400px",

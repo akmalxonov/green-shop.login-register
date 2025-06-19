@@ -6,17 +6,19 @@ import "../product/product.scss";
 import { useState } from "react";
 import { ArrowLeft, Heart, Star } from "lucide-react";
 import { Image } from "antd";
+
+
+
 const Product = () => {
   const navigate = useNavigate();
   const { getParam } = useSearchParamsHandler();
-  const { id } = useParams();
-  const category = getParam("category") || "house-plants";
+  const { category,id } = useParams();
   const sort = getParam("sort") || "default-sorting";
   const type = getParam("type") || "all-plants";
   const range_min = getParam("range_min") || 0;
   const range_max = getParam("range_max") || 1000;
   const { data }: DataType<ProductsType> = useQueryHandler<ProductsType>({
-    pathname: `products${category}-${sort}-${type}-${range_min}-${range_max}`,
+    pathname: `products`,
     url: `api/flower/category/${category}/${id}`,
     params: {
       sort,

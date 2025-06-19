@@ -9,6 +9,9 @@ import "../card/card.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQueryHandler } from "../../../../../hooks/useQuery";
 import { useSearchParamsHandler } from "../../../../../hooks/useSearchParams";
+import { useDispatch } from "react-redux";
+import { getData } from "../../../../../redux/shopSlice";
+import { useReduxSelector } from "../../../../../hooks/useRedux";
 const CardComp: FC<ProductsType> = (props) => {
   const navigate = useNavigate();
    const { getParam } = useSearchParamsHandler();
@@ -29,7 +32,10 @@ const CardComp: FC<ProductsType> = (props) => {
     },
   });
   console.log(data);
-  
+  const dispatch = useDispatch()
+  const {data:cartData} = useReduxSelector((state)=>state.cardSlice)
+  console.log(cartData);
+   
   return (
     <div className="card-comp">
       <div className="card-image-wrapper group">
@@ -39,14 +45,15 @@ const CardComp: FC<ProductsType> = (props) => {
           alt={props.title}
         />
         <div className="hover-icons group-hover:flex">
-          <div className="style_icons">
+          <div className="style_icons" onClick={() => dispatch(getData(props))}>
             <ShoppingCartOutlined />
           </div>
           <div className="style_icons">
             <HeartOutlined />
           </div>
           <div
-            onClick={() => navigate(`/product/${props._id}`)}
+            onClick={() => navigate(`/plant-info/${category}/${props._id}`)}
+
             className="style_icons"
           >
             <SearchOutlined />

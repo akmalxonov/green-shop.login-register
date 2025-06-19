@@ -7,6 +7,8 @@ import "../navbar/navbar.scss";
 import { setOpenAuthorizationModal } from "../../redux/modal-slice";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Badge } from "antd";
+import { useReduxSelector } from "../../hooks/useRedux";
 const Navbar = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
@@ -19,7 +21,7 @@ const Navbar = () => {
       if (user.name) setName(user.name);
     }
   }, []);
-
+  const {data} = useReduxSelector((state)=>state.cardSlice)
   return (
     <div className="navbar">
       <div className="container">
@@ -37,8 +39,10 @@ const Navbar = () => {
             <div className="search">
               <img src={search} alt="" />
             </div>
-            <div className="shop">
-              <img src={shop} alt="" />
+            <div className="shop" onClick={()=>navigate("/shop")}>
+              <Badge count={data.length}>
+                <img src={shop} alt="" />
+              </Badge>
             </div>
             <button
               className="btn"

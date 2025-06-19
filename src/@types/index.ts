@@ -117,3 +117,7 @@ export interface ProductsType {
   sold_times: number;
 }
 
+export interface ProductTypeLocal extends ProductsType {
+  count: number;
+  userPrice: number;
+}

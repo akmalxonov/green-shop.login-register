@@ -1,102 +1,76 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+import type { ProductTypeLocal } from "../../@types";
+import { getLocal, setLocal } from "../../generic/local";
 
 // Types
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  discount?: number;
-  image?: string;
-  description?: string;
-  count: number;
-  userPrice: number;
+interface InitialStateType {
+  data: ProductTypeLocal[];
+  coupon:number;  
 }
 
-interface CardState {
-  data: Product[];
-}
-
-// Initial State
-const initialState: CardState = {
-  data: JSON.parse(localStorage.getItem("data") || "[]") as Product[],
+const initialState: InitialStateType = {
+  data: getLocal("shop") || [],
+  coupon:0,
 };
 
 const cardSlice = createSlice({
   name: "shop",
   initialState,
   reducers: {
-    addProduct: (state, { payload }: PayloadAction<Omit<Product, 'count' | 'userPrice'>>) => {
-      const existingProduct = state.data.find(item => item.id === payload.id);
-      let updatedData: Product[];
-      const unitPrice = payload.discount || payload.price;
-
-      if (existingProduct) {
-        updatedData = state.data.map(item =>
-          item.id === payload.id
-            ? {
-                ...item,
-                count: item.count + 1,
-                userPrice: (item.count + 1) * unitPrice,
-              }
-            : item
-        );
-      } else {
-        const newProduct: Product = {
-          ...payload,
-          count: 1,
-          userPrice: unitPrice,
-        };
-        updatedData = [...state.data, newProduct];
+    getData(state, { payload }) {
+      if (state.data.find((value) => value?._id === payload._id)) {
+        state.data = state.data.map((value) => {
+          if (value?._id === payload._id) {
+            return {
+              ...value,
+              count: (value.count += 1),
+              userPrice: value.price * value.count,
+            };
+          }
+          return value;
+        });
+        setLocal("shop", state.data);
+        return;
       }
-
-      state.data = updatedData;
-      localStorage.setItem("data", JSON.stringify(updatedData));
+      state.data = [
+        ...state.data,
+        { ...payload, count: 1, userPrice: payload.price },
+      ];
+      setLocal("shop", state.data);
     },
-
-    increment: (state, { payload }: PayloadAction<number>) => {
-      const updatedDataIncrement = state.data.map(item => {
-        if (item.id === payload) {
-          const unitPrice = item.discount || item.price;
-          return {
-            ...item,
-            count: item.count + 1,
-            userPrice: (item.count + 1) * unitPrice,
-          };
-        }
-        return item;
-      });
-
-      state.data = updatedDataIncrement;
-      localStorage.setItem("data", JSON.stringify(updatedDataIncrement));
+    deleteData(state, { payload }) {
+      state.data = state.data.filter((value) => value._id !== payload);
+      setLocal("shop", state.data);
     },
-
-    decrement: (state, { payload }: PayloadAction<number>) => {
-      const updatedDataDecrement = state.data.map(item => {
-        if (item.id === payload) {
-          const unitPrice = item.discount || item.price;
-          return {
-            ...item,
-            count: item.count === 1 ? 1 : item.count - 1,
-            userPrice: item.count === 1
-              ? unitPrice
-              : (item.count - 1) * unitPrice,
-          };
-        }
-        return item;
-      });
-
-      state.data = updatedDataDecrement;
-      localStorage.setItem("data", JSON.stringify(updatedDataDecrement));
+    increment(state, { payload }) {
+      state.data = state.data.map((value) =>
+        value._id === payload
+          ? {
+              ...value,
+              count: (value.count += 1),
+              userPrice: value.price * value.count,
+            }
+          : value
+      );
+      setLocal("shop",state.data)
     },
-
-    deleteProduct: (state, { payload }: PayloadAction<number>) => {
-      const deleteProduct = state.data.filter(item => item.id !== payload);
-      state.data = deleteProduct;
-      localStorage.setItem("data", JSON.stringify(deleteProduct));
+    decrement(state, { payload }) {
+      state.data = state.data.map((value) =>
+        value._id === payload
+          ? {
+              ...value,
+              count: value.count >=2 ? (value.count-=1):1,
+              userPrice: value.price * value.count,
+            }
+          : value
+      );
+      setLocal("shop",state.data)
+    },
+    getCoupon(state,{payload}){
+      state.coupon =  payload
     }
-  }
+  },
 });
 
-export const { addProduct, increment, decrement, deleteProduct } = cardSlice.actions;
+export const { getData, deleteData,increment,decrement,getCoupon } = cardSlice.actions;
 export default cardSlice.reducer;
-// export type { Product, CardState };
